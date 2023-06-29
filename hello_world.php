@@ -59,7 +59,7 @@
   
 
     ];
-    echo "<table>";
+    echo "<table border=1>";
     echo "<tr><th>NAME</th><th>EMAIL</th>";
 
     //LOOP THROUGH the table data array
@@ -76,8 +76,9 @@
         $i++;
 
     }
+    echo "</table>";
 
-    $i=0;
+   
 
     ?>
 </body>
