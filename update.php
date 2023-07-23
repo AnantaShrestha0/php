@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,21 +10,67 @@
     <style>
       .error{
         color:red;
-      }
+\      }
     </style>
 </head>
 <body>
 
 <?php
 
+include 'connect.php';
 $name = $email = $password = '';
 $emailerror=$nameerror=$passworderror='';
+
+
+if(isset($_GET['id'])){
+    $sn=$_GET['id'];
+
+    $sql="SELECT * FROM registration WHERE SN=$sn";
+    $result=mysqli_query($con, $sql);
+    if($result){
+
+      if(mysqli_num_rows($result)>0){
+
+        while($row=mysqli_fetch_assoc($result)){
+            $id=$row['SN'];
+            $name=$row['name'];
+            $email=$row['email'];
+            $password=$row['password'];
+           
+        }
+    }
+    
+      
+    }
+    else{
+        die(mysqli_error($con));
+    }
+
+}
+
+
+
+
 if($_SERVER['REQUEST_METHOD']=='POST'){
     // print_r($_POST);
+
+    // print_r($_GET);
+    
+   $id=$_POST['id'];
     
     // $email=$_POST['email'];
     // $password=$_POST['password'];
     // echo "My name is $name email:$email password:$password";
+
+    
+   
+
+    
+    
+     
+    
+    
+
     if(empty($_POST['name'])){
       $nameerror="Name Required";
     }else{
@@ -46,12 +95,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
           die("connection failed: ".mysqli_connect_error());
       }
       else{
-          
-          $sql="INSERT INTO registration(name,email,password)values('$name', '$email', '$password')";
+
+        $sql="UPDATE registration SET name='$name',email='$email',password='$password' WHERE SN=$id";
           $result=mysqli_query($conn, $sql);
           if($result){
-              echo "data inserted in database";
-            
+              echo "data updated in database";
+              header('location:userlist.php');
           }
           else{
               die(mysqli_error($conn));
@@ -59,22 +108,23 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
       }
   }
 
-
 }
+
 ?>
+
     
- <form action="form.php" method="post">
+ <form action="update.php" method="post">
 
    <label for="name">Name</label><br>
-  <input type="text" name="name" id=""><br>
+  <input type="text" name="name" id="" value="<?php echo $name ?>"><br>
   <span class="error"><?php echo "$nameerror"?></span></br>
   <label for="name" name="email">Email</label><br>
-   <input type="text" name="email" id=""><br>
+   <input type="text" name="email" id="" value="<?php echo $email ?>"><br>
    <span class="error"><?php echo "$emailerror"?></span></br>
    <label for="name">Password</label><br>
-   <input type="password" name="password"><br>
+   <input type="password" name="password" value="<?php echo $password ?>"><br>
    <span class="error"><?php echo "$passworderror"?></span></br>
-   
+  <input type="hidden" name="id" value="<?php echo $id?>">
    
    <input type="submit" value="Register">
 
