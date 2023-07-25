@@ -1,3 +1,16 @@
+<?php
+
+$strvalue="This is my first cookie";
+setcookie("mycookie",$strvalue);
+echo "Cokkie set <br>";
+?>
+
+<?php
+foreach($_COOKIE as $key=>$val){
+    echo $key."=>".$val."</br>";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
