@@ -1,6 +1,10 @@
 
 
+<?php
 
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,20 +63,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     
    $id=$_POST['id'];
     
-    // $email=$_POST['email'];
-    // $password=$_POST['password'];
-    // echo "My name is $name email:$email password:$password";
-
-    
-   
-
     
     
-     
-    
-    
-
-
     if(empty($_POST['email'])){
       $emailerror="Email Required";
     }else{
@@ -96,7 +88,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $sql="SELECT * FROM registration WHERE email='$email' AND password='$password'";
           $result=mysqli_query($conn, $sql);
           if(mysqli_num_rows($result)>0){
-              
+              setcookie("userEmail",$email);
+              $_SESSION['email']=$email;
+              $_SESSION['password']=$password;
+              $_SESSION['name']=$name;
+
               header('location:indexhome.php');
           }
           else{

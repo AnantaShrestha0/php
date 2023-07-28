@@ -1,3 +1,12 @@
+<?php
+$userEmail=$_COOKIE['userEmail'];
+?>
+
+<?php
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +15,17 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>ko</h1>
+
+<?php
+
+echo $_SESSION['email'];
+echo $_SESSION['password'];
+
+?>
+    
+    <h1>Welcome:<?php echo $_COOKIE['userEmail']; ?></h1>
+
+    <a href="logout.php">lOG Out</a>
+    
 </body>
 </html>

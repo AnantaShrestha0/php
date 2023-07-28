@@ -50,6 +50,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
           $sql="INSERT INTO registration(name,email,password)values('$name', '$email', '$password')";
           $result=mysqli_query($conn, $sql);
           if($result){
+              
               echo "data inserted in database";
             
           }
