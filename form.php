@@ -38,8 +38,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     }else{
       $password=$_POST['password'];
     }
-    
 
+    if(empty($_POST['url'])){
+      $passworderror="URL Required";
+    }else{
+      $url=$_POST['url'];
+    }
+    
+   if(filter_var($url,FILTER_VALIDATE_URL)){
     if($nameerror==''&& $emailerror=='' && $passworderror==''){
       $conn=mysqli_connect('localhost', 'root', '', 'student_table');
       if(!$conn){
@@ -59,7 +65,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
           }
       }
   }
-
+   }else{
+    $errorURL="Invalid URL entered.";
+   }
 
 }
 ?>
@@ -75,6 +83,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
    <label for="name">Password</label><br>
    <input type="password" name="password"><br>
    <span class="error"><?php echo "$passworderror"?></span></br>
+   <label for="name">Enter your website url</label><br>
+   <input type="text" name="url"><br>
+   <span class="error"><?php echo "$errorURL"?></span></br>
+   
    
    
    <input type="submit" value="Register">
